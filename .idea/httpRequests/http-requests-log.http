@@ -1,0 +1,53 @@
+GET http://localhost:8000/register
+User-Agent: IntelliJ HTTP Client/GoLand 2024.1.2
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+###
+
+POST http://localhost:8000/register
+Content-Length: 36
+User-Agent: IntelliJ HTTP Client/GoLand 2024.1.2
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+data = {
+    'uid': 'example_user'
+}
+
+###
+
+OPTIONS http://localhost:8000/register
+User-Agent: IntelliJ HTTP Client/GoLand 2024.1.2
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+###
+
+POST http://localhost:8000/register
+User-Agent: IntelliJ HTTP Client/GoLand 2024.1.2
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+###
+
+POST http://localhost:8000/register
+1:
+User-Agent: IntelliJ HTTP Client/GoLand 2024.1.2
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+###
+
+POST http://localhost:8000/register
+User-Agent: IntelliJ HTTP Client/GoLand 2024.1.2
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+###
+
