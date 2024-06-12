@@ -13,7 +13,13 @@ WORKDIR /app
 RUN apk --no-cache add ca-certificates
 # Copy the built binary from the builder stage
 COPY --from=builder /app/myserver /app/myserver
-CMD [".app/myserver"]
+# Expose the port that the app will run on
+EXPOSE 8000
+# Ensure the binary has execute permissions
+RUN chmod +x /app/myserver
+# Command to run the binary
+CMD ["/app/myserver"]
+
 
 
 
