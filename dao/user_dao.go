@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 	"log"
 	"os"
 )
@@ -12,11 +13,13 @@ import (
 var db *sql.DB
 
 func InitDB() {
-	//err := godotenv.Load(".env")
-	//if err != nil {
-	//	log.Fatalf("Error loading .env file")
-	//}
+	//デプロイする時はここの部分を毎回コメントアウトする
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
 	// ①-1』
+	//デプロイする時はここの部分を毎回コメントアウトする
 	mysqlUser := os.Getenv("MYSQL_USER")
 	mysqlUserPwd := os.Getenv("MYSQL_USER_PWD")
 	mysqlDatabase := os.Getenv("MYSQL_DATABASE")
@@ -89,9 +92,10 @@ func UpdateUserProfile(user model.UserRegister) error {
 }
 
 func GetTweets() ([]model.Tweet, error) {
-	query := "SELECT id, content FROM tweets"
+	query := `SELECT tweets.id, tweets.uid, tweets.content, tweets.created_at, users.nickname FROM tweets JOIN users ON tweets.uid = users.id ORDER BY tweets.created_at DESC`
 	rows, err := db.Query(query)
 	if err != nil {
+		log.Printf("Error executing query: %v", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -99,13 +103,17 @@ func GetTweets() ([]model.Tweet, error) {
 	var tweets []model.Tweet
 	for rows.Next() {
 		var tweet model.Tweet
-		if err := rows.Scan(&tweet.Id, &tweet.Content); err != nil {
+		var nickname string
+		if err := rows.Scan(&tweet.Id, &tweet.Uid, &tweet.Content, &tweet.Date, &nickname); err != nil {
+			log.Printf("Error scanning row: %v", err)
 			return nil, err
 		}
+		tweet.Nickname = nickname // ツイートにユーザーネームを追加
 		tweets = append(tweets, tweet)
 	}
 
 	if err := rows.Err(); err != nil {
+		log.Printf("Error with rows: %v", err)
 		return nil, err
 	}
 

@@ -13,8 +13,9 @@ type UserRegister struct {
 }
 
 type Tweet struct {
-	Id      string `json:"id"`
-	Uid     string `json:"uid"`
-	Content string `json:"content"`
-	Date    string `json:"date"`
+	Id       string `json:"id"`
+	Uid      string `json:"uid"`
+	Content  string `json:"content"`
+	Date     string `json:"date"`
+	Nickname string `json:"nickname"`
 }

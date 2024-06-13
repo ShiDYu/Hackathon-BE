@@ -932,7 +932,7 @@ hackathon|schema||yuta||UPDATE|G</Grants>
     </schema>
     <schema id="290" parent="1" name="hackathon">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-06-12.10:46:30</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-06-13.15:54:08</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="291" parent="1" name="yuta"/>
@@ -945,7 +945,7 @@ hackathon|schema||yuta||UPDATE|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
     <column id="294" parent="292" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>7</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -964,39 +964,49 @@ hackathon|schema||yuta||UPDATE|G</Grants>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>4</Position>
     </column>
-    <index id="298" parent="292" name="PRIMARY">
+    <column id="298" parent="292" name="nickname">
+      <DasType>varchar(20)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <foreign-key id="299" parent="292" name="tweets_ibfk_1">
+      <ColNames>uid</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <RefColNames>id</RefColNames>
+      <RefTableName>users</RefTableName>
+    </foreign-key>
+    <index id="300" parent="292" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="299" parent="292" name="uid">
+    <index id="301" parent="292" name="tweets_ibfk_1">
       <ColNames>uid</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="300" parent="292" name="PRIMARY">
+    <key id="302" parent="292" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="301" parent="293" name="id">
+    <column id="303" parent="293" name="id">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="302" parent="293" name="nickname">
+    <column id="304" parent="293" name="nickname">
       <DasType>varchar(30)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="303" parent="293" name="bio">
+    <column id="305" parent="293" name="bio">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
     </column>
-    <index id="304" parent="293" name="PRIMARY">
+    <index id="306" parent="293" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="305" parent="293" name="PRIMARY">
+    <key id="307" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
