@@ -932,55 +932,56 @@ hackathon|schema||yuta||UPDATE|G</Grants>
     </schema>
     <schema id="290" parent="1" name="hackathon">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-06-13.15:54:08</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-06-15.10:29:08</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="291" parent="1" name="yuta"/>
-    <table id="292" parent="290" name="tweets">
+    <table id="292" parent="290" name="likes">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="293" parent="290" name="users">
+    <table id="293" parent="290" name="replies">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="294" parent="292" name="id">
-      <AutoIncrement>7</AutoIncrement>
+    <table id="294" parent="290" name="tweets">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="295" parent="290" name="users">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <column id="296" parent="292" name="tweet_id">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="295" parent="292" name="uid">
+    <column id="297" parent="292" name="user_id">
       <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="296" parent="292" name="content">
-      <DasType>text|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="297" parent="292" name="created_at">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <Position>4</Position>
-    </column>
-    <column id="298" parent="292" name="nickname">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>5</Position>
-    </column>
-    <foreign-key id="299" parent="292" name="tweets_ibfk_1">
-      <ColNames>uid</ColNames>
+    <foreign-key id="298" parent="292" name="likes_ibfk_1">
+      <ColNames>tweet_id</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <RefColNames>id</RefColNames>
+      <RefTableName>tweets</RefTableName>
+    </foreign-key>
+    <foreign-key id="299" parent="292" name="likes_ibfk_2">
+      <ColNames>user_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
     <index id="300" parent="292" name="PRIMARY">
-      <ColNames>id</ColNames>
+      <ColNames>tweet_id
+user_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="301" parent="292" name="tweets_ibfk_1">
-      <ColNames>uid</ColNames>
+    <index id="301" parent="292" name="user_id">
+      <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
     <key id="302" parent="292" name="PRIMARY">
@@ -989,24 +990,114 @@ hackathon|schema||yuta||UPDATE|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="303" parent="293" name="id">
-      <DasType>varchar(255)|0s</DasType>
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="304" parent="293" name="nickname">
-      <DasType>varchar(30)|0s</DasType>
+    <column id="304" parent="293" name="tweet_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="305" parent="293" name="bio">
+    <column id="305" parent="293" name="uid">
       <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <index id="306" parent="293" name="PRIMARY">
+    <column id="306" parent="293" name="content">
+      <DasType>text|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="307" parent="293" name="created_at">
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <Position>5</Position>
+    </column>
+    <foreign-key id="308" parent="293" name="replies_ibfk_1">
+      <ColNames>tweet_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>tweets</RefTableName>
+    </foreign-key>
+    <index id="309" parent="293" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="307" parent="293" name="PRIMARY">
+    <index id="310" parent="293" name="tweet_id">
+      <ColNames>tweet_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="311" parent="293" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="312" parent="294" name="id">
+      <AutoIncrement>8</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="313" parent="294" name="uid">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="314" parent="294" name="content">
+      <DasType>text|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="315" parent="294" name="created_at">
+      <DasType>timestamp|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <Position>4</Position>
+    </column>
+    <column id="316" parent="294" name="like_count">
+      <DasType>int|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <Position>5</Position>
+    </column>
+    <foreign-key id="317" parent="294" name="tweets_ibfk_1">
+      <ColNames>uid</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <RefColNames>id</RefColNames>
+      <RefTableName>users</RefTableName>
+    </foreign-key>
+    <index id="318" parent="294" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="319" parent="294" name="tweets_ibfk_1">
+      <ColNames>uid</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="320" parent="294" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="321" parent="295" name="id">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="322" parent="295" name="nickname">
+      <DasType>varchar(30)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="323" parent="295" name="bio">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <index id="324" parent="295" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="325" parent="295" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

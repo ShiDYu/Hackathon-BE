@@ -5,11 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7313b2db-c7fd-4665-9059-358edf19d24c" name="Changes" comment="dockerfile修正10">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/like_controller.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/reply_controller.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/like_dao.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/reply_dao.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dao/tweet_dao.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usecase/like_usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usecase/reply_usecase.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/8d55cba8-fc54-4efc-9770-a9231fa59a42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/8d55cba8-fc54-4efc-9770-a9231fa59a42.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dao/user_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/user_dao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/user.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,6 +90,17 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="ソースコードの改善" />

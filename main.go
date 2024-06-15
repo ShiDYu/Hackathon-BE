@@ -37,6 +37,15 @@ func main() {
 
 	http.HandleFunc("/create-tweet", corsHandler(controller.CreateTweetHandler))
 
+	// CORSを処理するハンドラをラップ
+	http.HandleFunc("/posts/likes", corsHandler(controller.GetLikesHandler))
+	http.HandleFunc("/posts/like", corsHandler(controller.LikesPostHandler))
+	http.HandleFunc("/posts/unlike", corsHandler(controller.UnlikesPostHandler))
+	http.HandleFunc("/reply", corsHandler(controller.CreateReplyHandler))
+	http.HandleFunc("/replies", corsHandler(controller.GetRepliesByTweetIDHandler))
+	http.HandleFunc("/reply/count", corsHandler(controller.GetReplyCountByTweetIDHandler))
+	http.HandleFunc("/repliedTweet", corsHandler(controller.GetRepliedTweetHandler))
+
 	closeDBWithSysCall()
 
 	log.Println("Listening...")
