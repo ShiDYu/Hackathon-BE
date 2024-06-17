@@ -1,3 +1,13 @@
+GET http://localhost:8000/replies/likes?userId=U9OqxNsxqBgHBFLhbYd48yrVYf72&replyId=1
+Accept: application/json
+User-Agent: IntelliJ HTTP Client/GoLand 2024.1.2
+Accept-Encoding: br, deflate, gzip, x-gzip
+content-length: 0
+
+<> 2024-06-18T010004.404.txt
+
+###
+
 GET http://localhost:8000/register
 User-Agent: IntelliJ HTTP Client/GoLand 2024.1.2
 Accept-Encoding: br, deflate, gzip, x-gzip

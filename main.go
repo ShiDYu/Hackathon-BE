@@ -47,7 +47,7 @@ func main() {
 	http.HandleFunc("/repliedTweet", corsHandler(controller.GetRepliedTweetHandler))
 	//ここから
 	http.HandleFunc("/replies/replies", corsHandler(controller.GetRepliesToReply))
-	http.HandleFunc("replies/likes", corsHandler(controller.GetReplyLikes)) //ここ保留 likesの取得とリプライの取得
+	http.HandleFunc("/replies/likes", controller.GetReplyLikes) //ここ保留 likesの取得とリプライの取得
 	http.HandleFunc("/replies/like", corsHandler(controller.LikeReply))
 	http.HandleFunc("/replies/unlike", corsHandler(controller.UnlikeReply))
 	http.HandleFunc("/replytoreply", corsHandler(controller.CreateReplyToReplyHandler))

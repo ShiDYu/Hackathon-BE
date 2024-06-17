@@ -196,7 +196,7 @@ func GetReplyLikes(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Invalid reply_id", http.StatusBadRequest)
 			return
 		}
-
+		log.Printf(strconv.Itoa(replyID), userID)
 		response, err := usecase.GetReplyLikes(replyID, userID)
 		if err != nil {
 			http.Error(w, "Error getting replies to reply", http.StatusInternalServerError)
