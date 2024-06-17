@@ -2,6 +2,7 @@ package dao
 
 import (
 	"api/model"
+	"database/sql"
 	"log"
 )
 
@@ -26,7 +27,21 @@ func CreateReply(reply model.Reply) error {
 	return nil
 }
 
-//リプライを送るとしっかりDBに保存された。
+// リプライを送るとしっかりDBに保存された。
+func getNicknameByUID(uid string) (string, error) {
+	var nickname string
+	query := `SELECT nickname FROM users WHERE id = ?`
+	err := db.QueryRow(query, uid).Scan(&nickname)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			log.Printf("No nickname found for uid: %d", uid)
+			return "", nil
+		}
+		log.Printf("Error executing query: %v", err)
+		return "", err
+	}
+	return nickname, nil
+}
 
 func GetRepliesByTweetID(tweetID int) ([]model.Reply, error) {
 	query := `SELECT id, tweet_id, uid, content, created_at FROM replies WHERE tweet_id = ?`
@@ -44,6 +59,15 @@ func GetRepliesByTweetID(tweetID int) ([]model.Reply, error) {
 			log.Printf("Error scanning row: %v", err)
 			return nil, err
 		}
+
+		// ニックネームを取得
+		nickname, err := getNicknameByUID(reply.Uid)
+		if err != nil {
+			log.Printf("Error getting nickname: %v", err)
+			return nil, err
+		}
+		reply.Nickname = nickname
+
 		replies = append(replies, reply)
 	}
 

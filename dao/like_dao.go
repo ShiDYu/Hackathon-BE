@@ -8,7 +8,7 @@ import (
 func GetLikes(postID, userID string) (model.PostResponse, error) {
 
 	var post model.LikedPost
-	err := db.QueryRow("SELECT id, like_count FROM posts WHERE id = ?", postID).Scan(&post.ID, &post.LikeCount)
+	err := db.QueryRow("SELECT id, like_count FROM tweets WHERE id = ?", postID).Scan(&post.ID, &post.LikeCount)
 	if err != nil {
 		return model.PostResponse{}, nil
 	}

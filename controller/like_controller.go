@@ -30,6 +30,7 @@ func GetLikesHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+		//ここでuserIDが適切に取れてきていないのでbad requestエラー
 		response, err := usecase.GetLikes(postID, userID)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)

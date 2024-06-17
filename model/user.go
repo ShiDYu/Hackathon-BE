@@ -21,11 +21,12 @@ type Tweet struct {
 }
 
 type Reply struct {
-	Id      string `json:"id"`
-	TweetId string `json:"tweet_id"`
-	Uid     string `json:"uid"`
-	Content string `json:"content"`
-	Date    string `json:"date"`
+	Id       string `json:"id"`
+	TweetId  string `json:"tweet_id"`
+	Uid      string `json:"uid"`
+	Content  string `json:"content"`
+	Date     string `json:"date"`
+	Nickname string `json:"nickname"`
 }
 
 type Like struct {
@@ -42,4 +43,26 @@ type LikedPost struct {
 type PostResponse struct {
 	LikeCount   int  `json:"likeCount"`
 	LikedByUser bool `json:"likedByUser"`
+}
+
+// ここからreplyの検証コード
+type ReplyToReply struct {
+	Id        int    `json:"id"`
+	ReplyId   int    `json:"replyId"`
+	Uid       string `json:"uid"`
+	Content   string `json:"content"`
+	CreatedAt string `json:"createdAt"`
+	Nickname  string `json:"nickname"`
+	LikeCount int    `json:"likeCount"`
+}
+
+type ReplyLike struct {
+	ReplyId int    `json:"replyId"`
+	Uid     string `json:"uid"`
+}
+
+type LikedReply struct {
+	ID        int      `json:"id"`
+	LikeCount int      `json:"likeCount"`
+	Likes     []string `json:"likes"`
 }

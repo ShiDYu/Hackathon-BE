@@ -45,6 +45,15 @@ func main() {
 	http.HandleFunc("/replies", corsHandler(controller.GetRepliesByTweetIDHandler))
 	http.HandleFunc("/reply/count", corsHandler(controller.GetReplyCountByTweetIDHandler))
 	http.HandleFunc("/repliedTweet", corsHandler(controller.GetRepliedTweetHandler))
+	//ここから
+	http.HandleFunc("/replies/replies", corsHandler(controller.GetRepliesToReply))
+	http.HandleFunc("replies/likes", corsHandler(controller.GetReplyLikes)) //ここ保留 likesの取得とリプライの取得
+	http.HandleFunc("/replies/like", corsHandler(controller.LikeReply))
+	http.HandleFunc("/replies/unlike", corsHandler(controller.UnlikeReply))
+	http.HandleFunc("/replytoreply", corsHandler(controller.CreateReplyToReplyHandler))
+	http.HandleFunc("/reply_replies/count", corsHandler(controller.GetReplyCount))
+
+	//バックエンドの実装はおk
 
 	closeDBWithSysCall()
 
