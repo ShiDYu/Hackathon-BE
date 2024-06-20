@@ -32,8 +32,13 @@ func main() {
 	http.HandleFunc("/register", corsHandler(controller.RegisterUserHandler))
 
 	http.HandleFunc("/profile", corsHandler(controller.UpdateUserProfileHandler))
+	http.HandleFunc("/profilecard", corsHandler(controller.GetProfileHandler))
+	http.HandleFunc("/save-avatar", corsHandler(controller.SetAvatarHandler))
+
+	http.HandleFunc("/avatar", corsHandler(controller.GetAvatarHandler))
 
 	http.HandleFunc("/tweets", corsHandler(controller.GetTweetsHandler))
+	http.HandleFunc("/tweets/delete", corsHandler(controller.DeleteTweetHandler))
 
 	http.HandleFunc("/create-tweet", corsHandler(controller.CreateTweetHandler))
 
@@ -43,6 +48,7 @@ func main() {
 	http.HandleFunc("/posts/unlike", corsHandler(controller.UnlikesPostHandler))
 	http.HandleFunc("/reply", corsHandler(controller.CreateReplyHandler))
 	http.HandleFunc("/replies", corsHandler(controller.GetRepliesByTweetIDHandler))
+	http.HandleFunc("/replies/delete", corsHandler(controller.DeleteReplyHandler))
 	http.HandleFunc("/reply/count", corsHandler(controller.GetReplyCountByTweetIDHandler))
 	http.HandleFunc("/repliedTweet", corsHandler(controller.GetRepliedTweetHandler))
 	//ここから
@@ -53,7 +59,8 @@ func main() {
 	http.HandleFunc("/replytoreply", corsHandler(controller.CreateReplyToReplyHandler))
 	http.HandleFunc("/reply_replies/count", corsHandler(controller.GetReplyCount))
 
-	//バックエンドの実装はおk
+	http.HandleFunc("/generate-tweet", corsHandler(controller.GenerateTweetHandler))
+	http.HandleFunc("/update-tweet", corsHandler(controller.UpdateTweetHandler))
 
 	closeDBWithSysCall()
 

@@ -193,9 +193,10 @@ func GetReplyLikes(w http.ResponseWriter, r *http.Request) {
 		}
 		userID := r.URL.Query().Get("userId")
 		if err != nil {
-			http.Error(w, "Invalid reply_id", http.StatusBadRequest)
+			http.Error(w, "Invalid user_id", http.StatusBadRequest)
 			return
 		}
+		
 		log.Printf(strconv.Itoa(replyID), userID)
 		response, err := usecase.GetReplyLikes(replyID, userID)
 		if err != nil {

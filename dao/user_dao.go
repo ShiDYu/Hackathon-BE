@@ -90,3 +90,36 @@ func UpdateUserProfile(user model.UserRegister) error {
 
 	return tx.Commit()
 }
+
+func SetAvatar(avatar model.AvatarRequest) error {
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+
+	_, err = tx.Exec("UPDATE users SET avatar = ? WHERE id = ?", avatar.AvatarURL, avatar.UserId)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	return tx.Commit()
+}
+
+func GetAvatar(userId string) (string, error) {
+	var avatarURL string
+	err := db.QueryRow("SELECT avatar FROM users WHERE id = ?", userId).Scan(&avatarURL)
+	if err != nil {
+		return "", err
+	}
+	return avatarURL, nil
+}
+
+func GetProfile(userId string) (model.UserProfile, error) {
+	var profile model.UserProfile
+	err := db.QueryRow("SELECT id, nickname, bio, avatar FROM users WHERE id = ?", userId).Scan(&profile.ID, &profile.Nickname, &profile.Bio, &profile.Avatar)
+	if err != nil {
+		return model.UserProfile{}, err //ポイント型で格納しておけば、空配列ではなく、nilを返す事ができる
+	}
+	return profile, nil
+}

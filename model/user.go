@@ -12,57 +12,14 @@ type UserRegister struct {
 	Bio      string `json:"bio"`
 }
 
-type Tweet struct {
-	Id       string `json:"id"`
-	Uid      string `json:"uid"`
-	Content  string `json:"content"`
-	Date     string `json:"date"`
+type AvatarRequest struct {
+	UserId    string `json:"userId"`
+	AvatarURL string `json:"avatarURL"`
+}
+
+type UserProfile struct {
+	ID       string `json:"id"`
 	Nickname string `json:"nickname"`
-}
-
-type Reply struct {
-	Id       string `json:"id"`
-	TweetId  string `json:"tweet_id"`
-	Uid      string `json:"uid"`
-	Content  string `json:"content"`
-	Date     string `json:"date"`
-	Nickname string `json:"nickname"`
-}
-
-type Like struct {
-	PostID int    `json:"postId"`
-	UserID string `json:"userId"`
-}
-
-type LikedPost struct {
-	ID        int      `json:"id"`
-	LikeCount int      `json:"likeCount"`
-	Likes     []string `json:"likes"`
-}
-
-type PostResponse struct {
-	LikeCount   int  `json:"likeCount"`
-	LikedByUser bool `json:"likedByUser"`
-}
-
-// ここからreplyの検証コード
-type ReplyToReply struct {
-	Id        int    `json:"id"`
-	ReplyId   int    `json:"replyId"`
-	Uid       string `json:"uid"`
-	Content   string `json:"content"`
-	CreatedAt string `json:"createdAt"`
-	Nickname  string `json:"nickname"`
-	LikeCount int    `json:"likeCount"`
-}
-
-type ReplyLike struct {
-	ReplyId int    `json:"replyId"`
-	Uid     string `json:"uid"`
-}
-
-type LikedReply struct {
-	ID        int      `json:"id"`
-	LikeCount int      `json:"likeCount"`
-	Likes     []string `json:"likes"`
+	Bio      string `json:"bio"`
+	Avatar   string `json:"avatar"`
 }

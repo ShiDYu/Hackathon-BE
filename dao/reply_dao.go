@@ -43,6 +43,21 @@ func getNicknameByUID(uid string) (string, error) {
 	return nickname, nil
 }
 
+func getAvatarByUID(uid string) (string, error) {
+	var avatarURL string
+	query := `SELECT avatar FROM users WHERE id = ?`
+	err := db.QueryRow(query, uid).Scan(&avatarURL)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			log.Printf("No avatarURL found for uid: %d", uid)
+			return "", nil
+		}
+		log.Printf("Error executing query: %v", err)
+		return "", err
+	}
+	return avatarURL, nil
+}
+
 func GetRepliesByTweetID(tweetID int) ([]model.Reply, error) {
 	query := `SELECT id, tweet_id, uid, content, created_at FROM replies WHERE tweet_id = ?`
 	rows, err := db.Query(query, tweetID)
@@ -66,7 +81,14 @@ func GetRepliesByTweetID(tweetID int) ([]model.Reply, error) {
 			log.Printf("Error getting nickname: %v", err)
 			return nil, err
 		}
+		avatarURL, err := getAvatarByUID(reply.Uid)
+		log.Printf("AvatarURL: %v", avatarURL)
+		if err != nil {
+			log.Printf("Error getting avatarURL: %v", err)
+			return nil, err
+		}
 		reply.Nickname = nickname
+		reply.AvatarURL = avatarURL
 
 		replies = append(replies, reply)
 	}

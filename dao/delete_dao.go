@@ -1,6 +1,6 @@
 package dao
 
-func DeletePost(tweetId int) error {
+func DeleteTweet(tweetId int) error {
 
 	tx, err := db.Begin()
 	if err != nil {

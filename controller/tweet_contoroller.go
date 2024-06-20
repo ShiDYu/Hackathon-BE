@@ -73,3 +73,42 @@ func CreateTweetHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 	}
 }
+
+func UpdateTweetHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+
+	switch r.Method {
+
+	case http.MethodOptions:
+		w.WriteHeader(http.StatusOK)
+		return
+
+	case http.MethodPost:
+		var updateTweet model.UpdateTweet
+		err := json.NewDecoder(r.Body).Decode(&updateTweet)
+		if err != nil {
+			log.Printf("fail: json.NewDecoder, %v\n", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		err = usecase.UpdateTweet(updateTweet.Id, updateTweet.Content)
+		if err != nil {
+			log.Printf("fail: usecase.UpdateTweet, %v\n", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(struct {
+			Success bool `json:"success"`
+		}{Success: true})
+
+	default:
+		log.Printf("fail: HTTP Method is %s\n", r.Method)
+		w.WriteHeader(http.StatusBadRequest)
+	}
+}

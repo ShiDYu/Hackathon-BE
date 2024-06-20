@@ -48,7 +48,15 @@ func GetRepliesToReply(replyID int) ([]model.ReplyToReply, error) {
 			log.Printf("Error getting nickname: %v", err)
 			return nil, err
 		}
+		avatarURL, err := getAvatarByUID(reply.Uid)
+		log.Printf("AvatarURL: %v", avatarURL)
+		if err != nil {
+			log.Printf("Error getting avatarURL: %v", err)
+			return nil, err
+		}
+
 		reply.Nickname = nickname
+		reply.AvatarURL = avatarURL
 
 		replies = append(replies, reply)
 	}

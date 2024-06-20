@@ -13,3 +13,7 @@ func GetTweets() ([]model.Tweet, error) {
 func CreateTweet(tweet model.Tweet) error {
 	return dao.CreateTweet(tweet)
 }
+
+func UpdateTweet(id int, content string) error {
+	return dao.UpdateTweetContent(id, content)
+}
