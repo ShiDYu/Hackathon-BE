@@ -5,27 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7313b2db-c7fd-4665-9059-358edf19d24c" name="Changes" comment="dockerfile修正10">
-      <change afterPath="$PROJECT_DIR$/controller/delete_controller.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/openAI_controller.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/like.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/openAI.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/tweet.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/usecase/delete_tweet_usecase.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/8d55cba8-fc54-4efc-9770-a9231fa59a42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/8d55cba8-fc54-4efc-9770-a9231fa59a42.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/register_user_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/register_user_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/reply_to_reply_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/reply_to_reply_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/tweet_contoroller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/tweet_contoroller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/delete_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/delete_dao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/openAI_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/openAI_controller.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dao/reply_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/reply_dao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/reply_to_reply.dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/reply_to_reply.dao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/tweet_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/tweet_dao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dao/user_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/user_dao.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/register_user_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/register_user_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/tweet_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/tweet_usecase.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usecase/reply_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/reply_usecase.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

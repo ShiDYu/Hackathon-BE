@@ -118,3 +118,24 @@ func GetRepliedTweet(tweetID int) (model.Tweet, error) {
 
 	return tweet, nil
 }
+
+func GenerateReply(ReplyContent string, TweetId int) error {
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+
+	_, err = tx.Exec("INSERT INTO replies (tweet_id, uid, content) VALUES (?, ?, ?)",
+		TweetId, 1, ReplyContent)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

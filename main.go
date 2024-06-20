@@ -61,6 +61,7 @@ func main() {
 
 	http.HandleFunc("/generate-tweet", corsHandler(controller.GenerateTweetHandler))
 	http.HandleFunc("/update-tweet", corsHandler(controller.UpdateTweetHandler))
+	http.HandleFunc("/ai-reply", corsHandler(controller.GenerateReplyHandler))
 
 	closeDBWithSysCall()
 

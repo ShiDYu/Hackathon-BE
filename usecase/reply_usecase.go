@@ -20,3 +20,7 @@ func GetReplyCount(tweetID int) (int, error) {
 func GetRepliedTweet(tweetID int) (model.Tweet, error) {
 	return dao.GetRepliedTweet(tweetID)
 }
+
+func GenerateReply(ReplyContent string, TweetId int) error {
+	return dao.GenerateReply(ReplyContent, TweetId)
+}
