@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7313b2db-c7fd-4665-9059-358edf19d24c" name="Changes" comment="dockerfile修正10">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/8d55cba8-fc54-4efc-9770-a9231fa59a42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/8d55cba8-fc54-4efc-9770-a9231fa59a42.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dao/user_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/user_dao.go" afterDir="false" />
     </list>
@@ -119,7 +117,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/dao/user_dao.go</url>
-          <line>31</line>
+          <line>32</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
