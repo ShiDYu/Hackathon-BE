@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 	"log"
 	"os"
 )
@@ -13,12 +14,12 @@ var db *sql.DB
 
 func InitDB() {
 	//デプロイする時はここの部分を毎回コメントアウトする
-	//err := godotenv.Load(".env")
-	//if err != nil {
-	//	log.Fatalf("Error loading .env file")
-	//}
-	//// ①-1』
-	////デプロイする時はここまでを毎回コメントアウトする
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+	// ①-1』
+	//デプロイする時はここまでを毎回コメントアウトする
 	mysqlUser := os.Getenv("MYSQL_USER")
 	mysqlUserPwd := os.Getenv("MYSQL_USER_PWD")
 	mysqlDatabase := os.Getenv("MYSQL_DATABASE")

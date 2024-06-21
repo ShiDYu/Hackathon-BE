@@ -59,7 +59,17 @@ func LikePost(like model.Like) (model.LikedPost, error) {
 	}
 	log.Println("Inserted like or duplicate detected")
 
-	_, err = tx.Exec("UPDATE tweets SET like_count = like_count + 1 WHERE id = ?", like.PostID)
+	//ライクテーブルからsum取得してcount+１の1の部分をsumにかえる
+	var likeCount int
+	err = tx.QueryRow("SELECT COUNT(*) FROM likes WHERE tweet_id = ? AND user_id = ?", like.PostID, like.UserID).Scan(&likeCount)
+	if err != nil {
+		log.Printf("Error fetching like count: %v\n", err)
+		tx.Rollback()
+		return model.LikedPost{}, err
+	}
+	log.Printf("Fetched like count: %d\n", likeCount)
+
+	_, err = tx.Exec("UPDATE tweets SET like_count = like_count + ? WHERE id = ?", likeCount, like.PostID)
 	if err != nil {
 		log.Printf("Error updating like count: %v\n", err)
 		tx.Rollback()
@@ -96,16 +106,24 @@ func UnlikePost(like model.Like) (model.LikedPost, error) {
 		return model.LikedPost{}, err
 	}
 
-	_, err = tx.Exec("DELETE FROM likes WHERE tweet_id = ? AND user_id = ?", like.PostID, like.UserID)
+	result, err := tx.Exec("DELETE FROM likes WHERE tweet_id = ? AND user_id = ?", like.PostID, like.UserID)
 	if err != nil {
 		tx.Rollback()
 		return model.LikedPost{}, err
 	}
 
-	_, err = tx.Exec("UPDATE tweets SET like_count = like_count - 1 WHERE id = ?", like.PostID)
+	rowsAffected, err := result.RowsAffected()
 	if err != nil {
 		tx.Rollback()
 		return model.LikedPost{}, err
+	}
+
+	if rowsAffected > 0 {
+		_, err = tx.Exec("UPDATE tweets SET like_count = like_count - ? WHERE id = ?", rowsAffected, like.PostID)
+		if err != nil {
+			tx.Rollback()
+			return model.LikedPost{}, err
+		}
 	}
 
 	err = tx.Commit()
