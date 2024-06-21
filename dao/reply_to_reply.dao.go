@@ -77,6 +77,15 @@ func LikeReply(replyID int, uid string) (model.LikedReply, error) {
 	}
 	log.Println("Transaction started")
 
+	var likeCount int
+	err = tx.QueryRow("SELECT like_count FROM replies WHERE id = ? FOR UPDATE", replyID).Scan(&likeCount)
+	if err != nil {
+		log.Printf("Error locking row: %v\n", err)
+		tx.Rollback()
+		return model.LikedReply{}, err
+	}
+	log.Println("Row locked")
+
 	result, err := tx.Exec("INSERT INTO likeReply (reply_id, uid) VALUES (?, ?) ON DUPLICATE KEY UPDATE reply_id = reply_id", replyID, uid)
 	if err != nil {
 		log.Printf("Error inserting like: %v\n", err)
@@ -91,13 +100,15 @@ func LikeReply(replyID int, uid string) (model.LikedReply, error) {
 		return model.LikedReply{}, err
 	}
 
-	_, err = tx.Exec("UPDATE replies SET like_count = like_count + ? WHERE id = ?", rowsAffected, replyID)
-	if err != nil {
-		log.Printf("Error updating like count: %v\n", err)
-		tx.Rollback()
-		return model.LikedReply{}, err
+	if rowsAffected > 0 {
+		_, err = tx.Exec("UPDATE replies SET like_count = like_count + 1 WHERE id = ?", replyID)
+		if err != nil {
+			log.Printf("Error updating like count: %v\n", err)
+			tx.Rollback()
+			return model.LikedReply{}, err
+		}
+		log.Println("Updated like count")
 	}
-	log.Println("Updated like count")
 
 	err = tx.Commit()
 	if err != nil {
