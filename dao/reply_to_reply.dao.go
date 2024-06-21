@@ -77,35 +77,35 @@ func LikeReply(replyID int, uid string) (model.LikedReply, error) {
 	}
 	log.Println("Transaction started")
 
-	var likeExists bool
-	err = tx.QueryRow("SELECT EXISTS(SELECT 1 FROM likeReply WHERE reply_id = ? AND uid = ?)", replyID, uid).Scan(&likeExists)
+	var likeCount int
+	err = tx.QueryRow("SELECT like_count FROM replies WHERE id = ? FOR UPDATE", replyID).Scan(&likeCount)
 	if err != nil {
-		log.Printf("Error checking existing like: %v\n", err)
+		log.Printf("Error locking row: %v\n", err)
 		tx.Rollback()
 		return model.LikedReply{}, err
 	}
+	log.Println("Row locked")
 
-	if likeExists {
-		log.Println("Like already exists, skipping insert and update")
-		tx.Rollback()
-		return model.LikedReply{ID: replyID, LikeCount: 0}, nil
-	}
-
-	_, err = tx.Exec("INSERT INTO likeReply (reply_id, uid) VALUES (?, ?)", replyID, uid)
+	result, err := tx.Exec("INSERT INTO likeReply (reply_id, uid) VALUES (?, ?) ON DUPLICATE KEY UPDATE reply_id = reply_id", replyID, uid)
 	if err != nil {
 		log.Printf("Error inserting like: %v\n", err)
 		tx.Rollback()
 		return model.LikedReply{}, err
 	}
-	log.Println("Inserted like")
+	log.Println("Inserted like or duplicate detected")
 
-	_, err = tx.Exec("UPDATE replies SET like_count = like_count + 1 WHERE id = ?", replyID)
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		tx.Rollback()
+		return model.LikedReply{}, err
+	}
+
+	_, err = tx.Exec("UPDATE replies SET like_count = like_count + ? WHERE id = ?", rowsAffected, replyID)
 	if err != nil {
 		log.Printf("Error updating like count: %v\n", err)
 		tx.Rollback()
 		return model.LikedReply{}, err
 	}
-	log.Println("Updated like count")
 
 	err = tx.Commit()
 	if err != nil {
