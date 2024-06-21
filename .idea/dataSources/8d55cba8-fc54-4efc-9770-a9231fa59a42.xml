@@ -932,7 +932,7 @@ hackathon|schema||yuta||UPDATE|G</Grants>
     </schema>
     <schema id="290" parent="1" name="hackathon">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-06-20.15:54:47</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-06-21.11:36:37</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="291" parent="1" name="yuta"/>
