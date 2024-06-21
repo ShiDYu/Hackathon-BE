@@ -77,7 +77,7 @@ func LikeReply(replyID int, uid string) (model.LikedReply, error) {
 	}
 	log.Println("Transaction started")
 
-	_, err = tx.Exec("INSERT INTO likeReply (reply_id, uid) VALUES (?, ?) ON DUPLICATE KEY UPDATE reply_id = reply_id", replyID, uid)
+	result, err := tx.Exec("INSERT INTO likeReply (reply_id, uid) VALUES (?, ?) ON DUPLICATE KEY UPDATE reply_id = reply_id", replyID, uid)
 	if err != nil {
 		log.Printf("Error inserting like: %v\n", err)
 		tx.Rollback()
@@ -85,7 +85,13 @@ func LikeReply(replyID int, uid string) (model.LikedReply, error) {
 	}
 	log.Println("Inserted like or duplicate detected")
 
-	_, err = tx.Exec("UPDATE replies SET like_count = like_count + 1 WHERE id = ?", replyID)
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		tx.Rollback()
+		return model.LikedReply{}, err
+	}
+
+	_, err = tx.Exec("UPDATE replies SET like_count = like_count + ? WHERE id = ?", rowsAffected, replyID)
 	if err != nil {
 		log.Printf("Error updating like count: %v\n", err)
 		tx.Rollback()
@@ -121,7 +127,7 @@ func UnLikeReply(replyID int, uid string) (model.LikedReply, error) {
 	log.Println("Transaction started")
 
 	query := `DELETE FROM likeReply WHERE reply_id=? AND uid=?`
-	_, err = tx.Exec(query, replyID, uid)
+	result, err := tx.Exec(query, replyID, uid)
 	if err != nil {
 		log.Printf("Error executing query: %v\n", err)
 		tx.Rollback()
@@ -129,8 +135,14 @@ func UnLikeReply(replyID int, uid string) (model.LikedReply, error) {
 	}
 	log.Println("Deleted like")
 
-	query = `UPDATE replies SET like_count = like_count - 1 WHERE id = ?`
-	_, err = tx.Exec(query, replyID)
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		tx.Rollback()
+		return model.LikedReply{}, err
+	}
+
+	query = `UPDATE replies SET like_count = like_count - ? WHERE id = ?`
+	_, err = tx.Exec(query, rowsAffected, replyID)
 	if err != nil {
 		log.Printf("Error updating like count: %v\n", err)
 		tx.Rollback()
