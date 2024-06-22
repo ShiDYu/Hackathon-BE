@@ -7,6 +7,7 @@ type Tweet struct {
 	Date      string `json:"date"`
 	Nickname  string `json:"nickname"`
 	AvatarURL string `json:"avatar_url"`
+	ImageURL  string `json:"image_url"`
 }
 
 type Reply struct {

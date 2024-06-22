@@ -2,12 +2,16 @@ package dao
 
 import (
 	"api/model"
+	"database/sql"
 	"log"
 	"time"
 )
 
 func GetTweets() ([]model.Tweet, error) {
-	query := `SELECT tweets.id, tweets.uid, tweets.content, tweets.created_at, users.nickname, users.avatar FROM tweets JOIN users ON tweets.uid = users.id ORDER BY tweets.created_at DESC`
+	query := `SELECT tweets.id, tweets.uid, tweets.content, tweets.created_at, tweets.image_url, users.nickname, users.avatar 
+              FROM tweets 
+              JOIN users ON tweets.uid = users.id 
+              ORDER BY tweets.created_at DESC`
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Printf("Error executing query: %v", err)
@@ -18,14 +22,23 @@ func GetTweets() ([]model.Tweet, error) {
 	var tweets []model.Tweet
 	for rows.Next() {
 		var tweet model.Tweet
+		var imageURL sql.NullString
 		var nickname string
 		var avatarURL string
-		if err := rows.Scan(&tweet.Id, &tweet.Uid, &tweet.Content, &tweet.Date, &nickname, &avatarURL); err != nil {
+		if err := rows.Scan(&tweet.Id, &tweet.Uid, &tweet.Content, &tweet.Date, &imageURL, &nickname, &avatarURL); err != nil {
 			log.Printf("Error scanning row: %v", err)
 			return nil, err
 		}
+
+		// sql.NullString から string に変換
+		if imageURL.Valid {
+			tweet.ImageURL = imageURL.String
+		} else {
+			tweet.ImageURL = ""
+		}
+
 		tweet.Nickname = nickname
-		tweet.AvatarURL = avatarURL // ツイートにユーザーネームを追加
+		tweet.AvatarURL = avatarURL
 		tweets = append(tweets, tweet)
 	}
 
@@ -43,7 +56,7 @@ func CreateTweet(tweet model.Tweet) error {
 		return err
 	}
 
-	_, err = tx.Exec("INSERT INTO tweets (uid, content) VALUES (?, ?)", tweet.Uid, tweet.Content)
+	_, err = tx.Exec("INSERT INTO tweets (uid, content, image_url) VALUES (?, ?, ?)", tweet.Uid, tweet.Content, tweet.ImageURL)
 	if err != nil {
 		tx.Rollback()
 		return err
@@ -87,7 +100,7 @@ func GetTodayTweetCount(userID string) (int, error) {
 	err := db.QueryRow(query, userID, today).Scan(&count)
 	if err != nil {
 		log.Printf("Error querying database: %v", err)
-		return 55, err
+		return 0, err
 	}
 
 	log.Printf("Tweet count: %d", count)
