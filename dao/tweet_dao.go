@@ -3,6 +3,7 @@ package dao
 import (
 	"api/model"
 	"log"
+	"strconv"
 	"time"
 )
 
@@ -79,11 +80,13 @@ func GetTodayTweetCount(userID string) (int, error) {
 		return 0, err
 	}
 	today := time.Now().In(loc).Format("2006-01-02")
+	log.Printf(today)
 	var count int
 	err = db.QueryRow("SELECT COUNT(*) FROM tweets WHERE uid = ? AND DATE(created_at) = ?", userID, today).Scan(&count)
 	if err != nil {
 		return 0, err
 	}
+	log.Printf(strconv.Itoa(count))
 
 	return count, nil
 }
