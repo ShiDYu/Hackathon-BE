@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func GetTweetsHandler(w http.ResponseWriter, r *http.Request) {
@@ -110,5 +111,43 @@ func UpdateTweetHandler(w http.ResponseWriter, r *http.Request) {
 	default:
 		log.Printf("fail: HTTP Method is %s\n", r.Method)
 		w.WriteHeader(http.StatusBadRequest)
+	}
+}
+
+func GetTodayTweetCountHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
+	if r.Method != http.MethodGet {
+		http.Error(w, "Invalid request method", http.StatusBadRequest)
+		return
+	}
+
+	userIDstr := r.URL.Query().Get("userId")
+	if userIDstr == "" {
+		http.Error(w, "Missing userId parameter", http.StatusBadRequest)
+		return
+	}
+	log.Printf(userIDstr)
+
+	count, err := usecase.GetTodayTweetCount(userIDstr)
+	if err != nil {
+		log.Printf("fail: getTodayTweetCount, %v\n", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	log.Printf(strconv.Itoa(count))
+
+	response := map[string]int{"tweet_count": count}
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+		return
 	}
 }

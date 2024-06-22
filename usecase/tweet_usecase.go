@@ -17,3 +17,7 @@ func CreateTweet(tweet model.Tweet) error {
 func UpdateTweet(id int, content string) error {
 	return dao.UpdateTweetContent(id, content)
 }
+
+func GetTodayTweetCount(UserID string) (int, error) {
+	return dao.GetTodayTweetCount(UserID)
+}
