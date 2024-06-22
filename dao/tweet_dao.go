@@ -75,6 +75,7 @@ func UpdateTweetContent(id int, content string) error {
 }
 
 func GetTodayTweetCount(userID string) (int, error) {
+
 	loc, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
 		return 0, err

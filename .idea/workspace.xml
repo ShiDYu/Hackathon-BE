@@ -7,6 +7,7 @@
     <list default="true" id="7313b2db-c7fd-4665-9059-358edf19d24c" name="Changes" comment="dockerfile修正10">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dao/tweet_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/dao/tweet_dao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usecase/tweet_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/tweet_usecase.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

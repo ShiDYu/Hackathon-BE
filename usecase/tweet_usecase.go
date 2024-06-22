@@ -19,5 +19,10 @@ func UpdateTweet(id int, content string) error {
 }
 
 func GetTodayTweetCount(UserID string) (int, error) {
-	return dao.GetTodayTweetCount(UserID)
+	val, err := dao.GetTodayTweetCount(UserID)
+	if err != nil {
+		print(err)
+	}
+
+	return val, nil
 }
