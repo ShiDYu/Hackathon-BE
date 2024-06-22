@@ -2,9 +2,7 @@ package dao
 
 import (
 	"api/model"
-	"fmt"
 	"log"
-	"strconv"
 	"time"
 )
 
@@ -76,21 +74,22 @@ func UpdateTweetContent(id int, content string) error {
 }
 
 func GetTodayTweetCount(userID string) (int, error) {
+	// 現在のUTC時間を取得
+	utcTime := time.Now().UTC()
+	// UTC時間に9時間を加算して日本時間を取得
+	japanTime := utcTime.Add(9 * time.Hour)
+	today := japanTime.Format("2006-01-02")
+	log.Printf("Today's date in Japan Time: %s", today)
 
-	loc, err := time.LoadLocation("Asia/Tokyo")
-	if err != nil {
-		fmt.Printf("Error loading timezone: %v", err)
-		return 99, err
-	}
-
-	today := time.Now().In(loc).Format("2006-01-02")
-	log.Printf(today)
 	var count int
-	err = db.QueryRow("SELECT COUNT(*) FROM tweets WHERE uid = ? AND DATE(created_at) = ?", userID, today).Scan(&count)
+	query := "SELECT COUNT(*) FROM tweets WHERE uid = ? AND DATE(created_at) = ?"
+	log.Printf("Executing query: %s with userID: %s and today: %s", query, userID, today)
+	err := db.QueryRow(query, userID, today).Scan(&count)
 	if err != nil {
+		log.Printf("Error querying database: %v", err)
 		return 55, err
 	}
-	log.Printf(strconv.Itoa(count))
 
+	log.Printf("Tweet count: %d", count)
 	return count, nil
 }
