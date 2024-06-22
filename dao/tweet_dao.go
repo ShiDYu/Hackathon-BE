@@ -78,14 +78,14 @@ func GetTodayTweetCount(userID string) (int, error) {
 
 	loc, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
-		return 0, err
+		return 99, err
 	}
 	today := time.Now().In(loc).Format("2006-01-02")
 	log.Printf(today)
 	var count int
 	err = db.QueryRow("SELECT COUNT(*) FROM tweets WHERE uid = ? AND DATE(created_at) = ?", userID, today).Scan(&count)
 	if err != nil {
-		return 0, err
+		return 55, err
 	}
 	log.Printf(strconv.Itoa(count))
 
