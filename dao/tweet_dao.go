@@ -2,6 +2,7 @@ package dao
 
 import (
 	"api/model"
+	"fmt"
 	"log"
 	"strconv"
 	"time"
@@ -78,8 +79,10 @@ func GetTodayTweetCount(userID string) (int, error) {
 
 	loc, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
+		fmt.Printf("Error loading timezone: %v", err)
 		return 99, err
 	}
+
 	today := time.Now().In(loc).Format("2006-01-02")
 	log.Printf(today)
 	var count int
